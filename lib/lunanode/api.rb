@@ -123,6 +123,14 @@ module Lunanode
     # Make an API call and return response.
     def call_api(handler_path, params)
       req_formdata = auth_request_formdata(handler_path, clean_params(params))
+      if $DEBUG
+        STDERR.puts "call_api()\n" + JSON.pretty_generate(
+          path: "#{rest_client.url}#{handler_path}",
+          req: JSON.parse(req_formdata[:req]),
+          signature: req_formdata[:signature],
+          nonce: req_formdata[:nonce]
+        )
+      end
       JSON.parse(rest_client[handler_path].post(req_formdata),
                  symbolize_names: true)
     rescue RestClient::Exception => err
