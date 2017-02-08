@@ -56,28 +56,33 @@ module Lunanode
     include APIActions
     attr_reader :api_id
 
+    # Instantiate an API object
+    #
+    # @return [API] an API instance.
+    #
     # @overload initialize(credentials_file)
     #   Instantiate an API object from a credentials file.
-    #   @param credentials_file[IO,String] a JSON credentials file
+    #   @param credentials_file[String,File] a JSON credentials file
     #     (which contains the keys `api_id` and `api_key`)
     #
-    # @overload initialize(api_id: nil, api_key: nil)
+    #   @raise [JSON::ParserError] if the JSON file could not be read properly.
+    #   @raise [KeyError] if any required key could not be found.
+    #
+    # @overload initialize(api_id: , api_key: )
     #   Instantiate an API object from an API ID and API Key.
     #   @param api_id[String] A LunaNode API ID
     #   @param api_key[String] A LunaNode API Key
     #
-    def initialize(credentials_file = nil, api_id: nil, api_key: nil)
-      if !credentials_file.nil? && File.exist?(credentials_file)
+    #   @raise [KeyError] if any required key could not be found.
+    #
+    def initialize(*args, **options)
+      credentials_file = args.compact.first.to_s
+      if File.exist?(credentials_file)
         credentials_data = File.read(credentials_file)
-        credentials = JSON.parse(credentials_data, symbolize_names: true)
-        @api_id = credentials[:api_id]
-        @api_key = credentials[:api_key]
-      else
-        @api_id = api_id
-        @api_key = api_key
+        options = JSON.parse(credentials_data, symbolize_names: true)
       end
-      @api_id = @api_id.to_s.freeze
-      @api_key = @api_key.to_s.freeze
+      @api_id = options.fetch(:api_id).to_s.dup.freeze
+      @api_key = options.fetch(:api_key).to_s.dup.freeze
       @rest_client = RestClient::Resource.new(
         API_ENDPOINT,
         verify_ssl: OpenSSL::SSL::VERIFY_PEER
