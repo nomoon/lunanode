@@ -32,15 +32,15 @@ module Lunanode
       end
 
       def volume_snapshot_create(region:, volume_id:, label:)
-        action(:volume, :snapshot_create, region: region, volume_id: volume_id, label: label)
+        action(:volume, :"snapshot-create", region: region, volume_id: volume_id, label: label)
       end
 
       def volume_snapshot_delete(region:, snapshot_id:)
-        action(:volume, :snapshot_delete, region: region, snapshot_id: snapshot_id)
+        action(:volume, :"snapshot-delete", region: region, snapshot_id: snapshot_id)
       end
 
       def volume_snapshot_list(region:)
-        action(:volume, :snapshot_list, region: region)
+        action(:volume, :"snapshot-list", region: region)
       end
     end
   end
