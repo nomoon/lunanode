@@ -1,0 +1,391 @@
+:vm:
+  :start:
+    :required:
+      - vm_id
+  :stop:
+    :required:
+      - vm_id
+  :reboot:
+    :required:
+      - vm_id
+  :diskswap:
+    :required:
+      - vm_id
+  :info:
+    :required:
+      - vm_id
+  :delete:
+    :required:
+      - vm_id
+  :reimage:
+    :required:
+      - vm_id
+      - image_id
+  :resize:
+    :required:
+      - vm_id
+      - plan_id
+  :rescue:
+    :required:
+      - vm_id
+  :vnc:
+    :required:
+      - vm_id
+  :floatingip_add:
+    :required:
+      - vm_id
+    :optional:
+      - ip
+      - private_ip
+  :floatingip_delete:
+    :required:
+      - vm_id
+    :optional:
+      - ip
+      - keep
+  :iplist:
+    :required:
+      - vm_id
+  :ip_add:
+    :required:
+      - vm_id
+    :optional:
+      - ip
+  :ip_delete:
+    :required:
+      - vm_id
+      - ip
+  :securitygroup_add:
+    :required:
+      - vm_id
+      - group_id
+  :securitygroup_remove:
+    :required:
+      - vm_id
+      - group_id
+  :create:
+    :required:
+      - hostname
+      - plan_id
+      - image_id
+    :optional:
+      - region
+      - ip
+      - net_id
+      - securitygroups
+      - scripts
+      - volume_id
+      - volume_virtio
+      - key_id
+      - set_password
+      - affinity_group
+  :snapshot:
+    :required:
+      - vm_id
+      - name
+  :list:
+  :shelve:
+    :required:
+      - vm_id
+  :unshelve:
+    :required:
+      - vm_id
+  :rename:
+    :required:
+      - vm_id
+      - hostname
+:dns:
+  :list:
+  :set:
+    :required:
+      - ip
+      - hostname
+  :zone_list:
+  :zone_add:
+    :required:
+      - origin
+    :optional:
+      - ttl
+  :zone_remove:
+    :required:
+      - zone_id
+  :record_list:
+    :required:
+      - zone_id
+  :record_add:
+    :required:
+      - zone_id
+      - name
+      - data
+      - ttl
+      - type
+  :record_remove:
+    :required:
+      - record_id
+  :dyn_list:
+  :dyn_add:
+    :required:
+      - name
+      - ip
+  :dyn_update:
+    :required:
+      - dyn_id
+      - name
+      - ip
+  :dyn_remove:
+    :required:
+      - dyn_id
+:image:
+  :list:
+    :optional:
+      - region
+  :delete:
+    :required:
+      - image_id
+  :details:
+    :required:
+      - image_id
+  :replicate:
+    :required:
+      - image_id
+      - region
+  :fetch:
+    :required:
+      - region
+      - name
+      - location
+      - format
+    :optional:
+      - virtio
+  :retrieve:
+    :required:
+      - image_id
+:volume:
+  :list:
+    :required:
+      - region
+  :create:
+    :required:
+      - region
+      - label
+      - size
+    :optional:
+      - image
+      - snapshot_id
+  :delete:
+    :required:
+      - region
+      - volume_id
+  :attach:
+    :required:
+      - region
+      - volume_id
+      - vm_id
+      - target
+  :detach:
+    :required:
+      - region
+      - volume_id
+  :info:
+    :required:
+      - region
+      - volume_id
+  :extend:
+    :required:
+      - region
+      - volume_id
+      - size
+  :snapshot_create:
+    :required:
+      - region
+      - volume_id
+      - label
+  :snapshot_delete:
+    :required:
+      - region
+      - snapshot_id
+  :snapshot_list:
+    :required:
+      - region
+:floating:
+  :list:
+  :add:
+    :required:
+      - region
+  :delete:
+    :required:
+      - region
+      - ip
+:network:
+  :list:
+    :optional:
+      - region
+  :create:
+    :required:
+      - region
+      - name
+      - subnet
+      - dns
+  :delete:
+    :required:
+      - region
+      - net_id
+:lb:
+  :list:
+    :required:
+      - region
+    :optional:
+      - net_id
+  :create:
+    :required:
+      - region
+      - net_id
+      - name
+      - method
+      - protocol
+      - connection_limit
+      - port
+  :delete:
+    :required:
+      - region
+      - lb_id
+  :info:
+    :required:
+      - region
+      - lb_id
+  :member_add:
+    :required:
+      - region
+      - lb_id
+      - ip
+      - port
+  :member_remove:
+    :required:
+      - region
+      - lb_id
+      - member_id
+  :associate:
+    :required:
+      - region
+      - lb_id
+      - ip
+:plan:
+  :list:
+:region:
+  :list:
+:monitor:
+  :check_list:
+  :check_types:
+  :check_add:
+    :required:
+      - name
+      - type
+      - fail_count
+      - success_count
+      - check_interval
+    :optional:
+      - "**from_check_type"
+  :check_remove:
+    :required:
+      - check_id
+  :contact_list:
+  :contact_add:
+  :contact_remove:
+    :required:
+      - type
+      - rel
+  :alert_list:
+    :required:
+      - check_id
+  :alert_add:
+    :required:
+      - check_id
+      - contact_id
+  :alert_remove:
+    :required:
+      - alert_id
+securitygroup:
+  :list:
+  :create:
+    :required:
+      - region
+      - name
+  :delete:
+    :required:
+      - region
+      - group_id
+  :rename:
+    :required:
+      - region
+      - group_id
+      - name
+  :rule_list:
+    :required:
+      - region
+      - group_id
+  :rule_insert:
+    :required:
+      - region
+      - group_id
+      - direction
+      - type
+      - protocol
+      - remote_type
+      - remote_value
+    :optional:
+      - port_min
+      - port_max
+      - label
+  :rule_delete:
+    :required:
+      - region
+      - group_id
+      - rule_id
+:script:
+  :list:
+:email:
+  :usage:
+  :domain_list:
+  :domain_add:
+    :required:
+      - name
+  :domain_remove:
+    :required:
+      - domain_id
+  :domain_dkim_set:
+    :required:
+      - domain_id
+      - selector
+      - private_key
+  :domain_dkim_unset:
+    :required:
+      - domain_id
+  :user_list:
+    :required:
+      - domain_id
+  :user_add:
+    :required:
+      - domain_id
+      - username
+      - password
+  :user_set_password:
+    :required:
+      - domain_id
+      - user_id
+      - password
+  :user_remove:
+    :required:
+      - domain_id
+      - user_id
+  :alias_list:
+    :required:
+      - domain_id
+  :alias_add:
+    :required:
+      - domain_id
+      - name
+      - target
+  :alias_remove:
+    :required:
+      - domain_id
+      - alias_id
