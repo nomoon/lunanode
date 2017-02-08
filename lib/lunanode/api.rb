@@ -99,7 +99,7 @@ module Lunanode
     #
     # @param category[#to_sym] The API action category (i.e. dns, image, vm...)
     # @param action[#to_sym] The API action name (i.e. create, list...)
-    # @param params[Hash] Any parameters required for the action.
+    # @param params[**Hash] Any parameters required for the action.
     #
     # @return [Hash,Array,String] Response data from the API action.
     # @raise [APIError] If there was a problem with the action.
