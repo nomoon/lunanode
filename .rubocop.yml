@@ -1,5 +1,6 @@
 AllCops:
   TargetRubyVersion: 2.1
+  DisplayCopNames: true
 
 # Metrics
 Metrics/AbcSize:
@@ -31,6 +32,8 @@ Metrics/LineLength:
   Description: 'Limit lines to 80 characters.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#80-character-limits'
   Enabled: true
+  Exclude:
+    - lib/lunanode/api_actions/default/*.rb
 
 Metrics/MethodLength:
   Description: 'Avoid methods longer than 30 lines of code.'

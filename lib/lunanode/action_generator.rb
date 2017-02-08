@@ -3,6 +3,10 @@
 require "yaml"
 
 module Lunanode
+  # Helper utility to generate ruby source module/method definitions for API
+  # actions from a YAML file.
+  #
+  # It is not required by default and does not evaluate source. (See Rakefile.)
   module ActionGenerator
     module_function
 
@@ -28,7 +32,7 @@ module Lunanode
     end
 
     def indent_lines(string)
-      string.gsub(/^/, "  ")
+      string.gsub(/^(?!$)/, "  ")
     end
 
     def check_safe!(identifier)
@@ -47,25 +51,19 @@ module Lunanode
         generate_action(category, action, params)
       end
 
-      default_module = "module Default\n" +
-                       actions.map { |a| indent_lines(a) }.join("\n") +
-                       "end\n"
-
       category_module = "module #{module_name(category)}\n" +
-                        indent_lines(default_module) +
+                        actions.map { |a| indent_lines(a) }.join("\n") +
                         "end\n"
 
-      actions_module = "module Actions\n" +
+      actions_module = "module APIActions\n" +
                        indent_lines(category_module) +
                        "end\n"
 
-      api_class = "class API\n" +
-                  indent_lines(actions_module) +
-                  "end\n"
+      src = "module #{name.split('::')[-2]}\n" +
+            indent_lines(actions_module) +
+            "end\n"
 
-      "module #{name.split('::')[-2]}\n" +
-        indent_lines(api_class) +
-        "end\n "
+      "# frozen_string_literal: true\n\n#{src}"
     end
 
     def generate_action(category, action, params)

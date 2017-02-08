@@ -9,9 +9,9 @@ task :generate_default_api_modules do
   require "lunanode/action_generator"
   modules = Lunanode::ActionGenerator.generate_default_modules
   modules.each do |category, module_s|
-    filename = "lib/lunanode/api/actions/default/#{category}.rb"
+    filename = "lib/lunanode/api_actions/default/#{category}.rb"
     raise "File already exists: #{filename}" if File.exist?(filename)
-    bytes = File.write(filename, "# frozen_string_literal: true\n\n#{module_s}")
+    bytes = File.write(filename, module_s)
     puts "File written: #{filename} (#{bytes} bytes)"
   end
 end
