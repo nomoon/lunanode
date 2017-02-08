@@ -44,11 +44,11 @@ module Lunanode
       end
 
       def vm_floatingip_add(vm_id:, ip: nil, private_ip: nil)
-        action(:vm, :floatingip_add, vm_id: vm_id, ip: ip, private_ip: private_ip)
+        action(:vm, :"floatingip-add", vm_id: vm_id, ip: ip, private_ip: private_ip)
       end
 
       def vm_floatingip_delete(vm_id:, ip: nil, keep: nil)
-        action(:vm, :floatingip_delete, vm_id: vm_id, ip: ip, keep: keep)
+        action(:vm, :"floatingip-delete", vm_id: vm_id, ip: ip, keep: keep)
       end
 
       def vm_iplist(vm_id:)
@@ -56,19 +56,19 @@ module Lunanode
       end
 
       def vm_ip_add(vm_id:, ip: nil)
-        action(:vm, :ip_add, vm_id: vm_id, ip: ip)
+        action(:vm, :"ip-add", vm_id: vm_id, ip: ip)
       end
 
       def vm_ip_delete(vm_id:, ip:)
-        action(:vm, :ip_delete, vm_id: vm_id, ip: ip)
+        action(:vm, :"ip-delete", vm_id: vm_id, ip: ip)
       end
 
       def vm_securitygroup_add(vm_id:, group_id:)
-        action(:vm, :securitygroup_add, vm_id: vm_id, group_id: group_id)
+        action(:vm, :"securitygroup-add", vm_id: vm_id, group_id: group_id)
       end
 
       def vm_securitygroup_remove(vm_id:, group_id:)
-        action(:vm, :securitygroup_remove, vm_id: vm_id, group_id: group_id)
+        action(:vm, :"securitygroup-remove", vm_id: vm_id, group_id: group_id)
       end
 
       def vm_create(hostname:, plan_id:, image_id:, region: nil, ip: nil, net_id: nil, securitygroups: nil, scripts: nil, volume_id: nil, volume_virtio: nil, key_id: nil, set_password: nil, affinity_group: nil)

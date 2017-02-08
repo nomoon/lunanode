@@ -31,13 +31,13 @@
   :vnc:
     :required:
       - vm_id
-  :floatingip_add:
+  :floatingip-add:
     :required:
       - vm_id
     :optional:
       - ip
       - private_ip
-  :floatingip_delete:
+  :floatingip-delete:
     :required:
       - vm_id
     :optional:
@@ -46,20 +46,20 @@
   :iplist:
     :required:
       - vm_id
-  :ip_add:
+  :ip-add:
     :required:
       - vm_id
     :optional:
       - ip
-  :ip_delete:
+  :ip-delete:
     :required:
       - vm_id
       - ip
-  :securitygroup_add:
+  :securitygroup-add:
     :required:
       - vm_id
       - group_id
-  :securitygroup_remove:
+  :securitygroup-remove:
     :required:
       - vm_id
       - group_id
@@ -100,39 +100,39 @@
     :required:
       - ip
       - hostname
-  :zone_list:
-  :zone_add:
+  :zone-list:
+  :zone-add:
     :required:
       - origin
     :optional:
       - ttl
-  :zone_remove:
+  :zone-remove:
     :required:
       - zone_id
-  :record_list:
+  :record-list:
     :required:
       - zone_id
-  :record_add:
+  :record-add:
     :required:
       - zone_id
       - name
       - data
       - ttl
       - type
-  :record_remove:
+  :record-remove:
     :required:
       - record_id
-  :dyn_list:
-  :dyn_add:
+  :dyn-list:
+  :dyn-add:
     :required:
       - name
       - ip
-  :dyn_update:
+  :dyn-update:
     :required:
       - dyn_id
       - name
       - ip
-  :dyn_remove:
+  :dyn-remove:
     :required:
       - dyn_id
 :image:
@@ -195,16 +195,16 @@
       - region
       - volume_id
       - size
-  :snapshot_create:
+  :snapshot-create:
     :required:
       - region
       - volume_id
       - label
-  :snapshot_delete:
+  :snapshot-delete:
     :required:
       - region
       - snapshot_id
-  :snapshot_list:
+  :snapshot-list:
     :required:
       - region
 :floating:
@@ -274,9 +274,9 @@
 :region:
   :list:
 :monitor:
-  :check_list:
-  :check_types:
-  :check_add:
+  :check-list:
+  :check-types:
+  :check-add:
     :required:
       - name
       - type
@@ -285,23 +285,23 @@
       - check_interval
     :optional:
       - "**from_check_type"
-  :check_remove:
+  :check-remove:
     :required:
       - check_id
-  :contact_list:
-  :contact_add:
-  :contact_remove:
+  :contact-list:
+  :contact-add:
+  :contact-remove:
     :required:
       - type
       - rel
-  :alert_list:
+  :alert-list:
     :required:
       - check_id
-  :alert_add:
+  :alert-add:
     :required:
       - check_id
       - contact_id
-  :alert_remove:
+  :alert-remove:
     :required:
       - alert_id
 securitygroup:
@@ -319,11 +319,11 @@ securitygroup:
       - region
       - group_id
       - name
-  :rule_list:
+  :rule-list:
     :required:
       - region
       - group_id
-  :rule_insert:
+  :rule-insert:
     :required:
       - region
       - group_id
@@ -336,7 +336,7 @@ securitygroup:
       - port_min
       - port_max
       - label
-  :rule_delete:
+  :rule-delete:
     :required:
       - region
       - group_id
@@ -345,47 +345,47 @@ securitygroup:
   :list:
 :email:
   :usage:
-  :domain_list:
-  :domain_add:
+  :domain-list:
+  :domain-add:
     :required:
       - name
-  :domain_remove:
+  :domain-remove:
     :required:
       - domain_id
-  :domain_dkim_set:
+  :domain-dkim-set:
     :required:
       - domain_id
       - selector
       - private_key
-  :domain_dkim_unset:
+  :domain-dkim-unset:
     :required:
       - domain_id
-  :user_list:
+  :user-list:
     :required:
       - domain_id
-  :user_add:
+  :user-add:
     :required:
       - domain_id
       - username
       - password
-  :user_set_password:
+  :user-set-password:
     :required:
       - domain_id
       - user_id
       - password
-  :user_remove:
+  :user-remove:
     :required:
       - domain_id
       - user_id
-  :alias_list:
+  :alias-list:
     :required:
       - domain_id
-  :alias_add:
+  :alias-add:
     :required:
       - domain_id
       - name
       - target
-  :alias_remove:
+  :alias-remove:
     :required:
       - domain_id
       - alias_id

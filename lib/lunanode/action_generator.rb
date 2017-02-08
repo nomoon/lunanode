@@ -21,7 +21,7 @@ module Lunanode
       generate_categories(api_data)
     end
 
-    UNSAFE_IDENTIFIER = /.{21,}|[^A-Za-z0-9_*]/
+    UNSAFE_IDENTIFIER = /.{21,}|[^A-Za-z0-9_*\-]/
 
     def module_name(name)
       if name.length > 3
@@ -93,8 +93,8 @@ module Lunanode
         param_list_sig = "(#{param_list_sig_arr.join(', ')})"
       end
 
-      "def #{category}_#{action}#{param_list_sig}\n" \
-      "  action(:#{category}, :#{action}#{param_list_call})\n" \
+      "def #{category}_#{action.to_s.tr('-', '_')}#{param_list_sig}\n" \
+      "  action(:#{category}, #{action.inspect}#{param_list_call})\n" \
       "end\n"
     end
 
