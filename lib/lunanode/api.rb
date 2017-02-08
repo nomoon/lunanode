@@ -28,28 +28,24 @@ module Lunanode
     API_ENDPOINT = "https://dynamic.lunanode.com/api/".freeze
     @params_for = {}
 
-    # Show parameter info for any API method.
+    # Show parameter info for any {API} instance method.
+    #
+    # The keys of the hash results denote the type of parameter:
+    # - :keyreq  => Required keyword argument
+    # - :key     => Optional keyword argument
+    # - :keyrest => Arbitrary additional keyword arguments
+    # - :req     => Required positional argument
+    # - :opt     => Optional positional argument
+    # - :rest    => Arbitrary additional positional arguments
     #
     # @param method_name[#to_sym] The name of the API method
-    # @return [Hash] information about the method parameters
-    #
+    # @return [Hash] information about the method parameters.
     def self.params_for(method_name)
       @params_for[method_name] ||= begin
         method_name = method_name.to_sym
         param_groups = instance_method(method_name).parameters.group_by(&:first)
-        out = {
-          required: param_groups[:keyreq] && param_group[:keyreq].map(&:last),
-          optional: param_groups[:key] && param_groups[:key].map(&:last),
-          additional: param_groups.key?(:keyrest),
-        }
-        out.each do |k, v|
-          if v
-            v.freeze
-          else
-            out.delete(k)
-          end
-        end
-        out.freeze
+        out = param_groups.map { |k, v| [k, v.map(&:last)] }.to_h
+        out.each_value(&:freeze).freeze
       end
     end
 
