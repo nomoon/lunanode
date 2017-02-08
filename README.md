@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/nomoon/lunanode.svg?branch=master)](https://travis-ci.org/nomoon/lunanode)
 [![Code Climate](https://codeclimate.com/github/nomoon/lunanode/badges/gpa.svg)](https://codeclimate.com/github/nomoon/lunanode)
 [![Dependency Status](https://gemnasium.com/badges/github.com/nomoon/lunanode.svg)](https://gemnasium.com/github.com/nomoon/lunanode)
+[![Gem Version](https://badge.fury.io/rb/lunanode.svg)](https://badge.fury.io/rb/lunanode)
 
 A basic implementation of the [Luna Node API](https://wiki.lunanode.com/index.php/API) for Ruby.
 **Unofficial and unsupported by the people at [Luna Node](https://lunanode.com).**
