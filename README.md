@@ -4,6 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/nomoon/lunanode/badges/gpa.svg)](https://codeclimate.com/github/nomoon/lunanode)
 
 A basic implementation of the [Luna Node API](https://wiki.lunanode.com/index.php/API) for Ruby.
+**Unofficial and unsupported by the people at [Luna Node](https://lunanode.com).**
 
 ## Installation
 
