@@ -156,7 +156,7 @@ module Lunanode
     def raw_request_message(params)
       params[:api_id] = api_id
       params[:api_partialkey] = api_key.slice(0, 64)
-      params.to_json
+      JSON.generate(params)
     end
 
     # Generate nonce for request
