@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Created this Changelog.
+- Improved documentation (for `API.new` and `API.params_for`).
 
 ### Changed
+- `API.new` will no longer instantiate without any parameters, though it is less
+  fussy about its parameters now.
 - APIError now unescapes some HTML entities from the provided message for
 improved readability.
+- APIError will also pretty-print JSON responses.
 
 ## [0.1.6] - 2017-02-08
 ### Changed

@@ -28,28 +28,24 @@ module Lunanode
     API_ENDPOINT = "https://dynamic.lunanode.com/api/".freeze
     @params_for = {}
 
-    # Show parameter info for any API method.
+    # Show parameter info for any {API} instance method.
+    #
+    # The keys of the hash results denote the type of parameter:
+    # - :keyreq  => Required keyword argument
+    # - :key     => Optional keyword argument
+    # - :keyrest => Arbitrary additional keyword arguments
+    # - :req     => Required positional argument
+    # - :opt     => Optional positional argument
+    # - :rest    => Arbitrary additional positional arguments
     #
     # @param method_name[#to_sym] The name of the API method
-    # @return [Hash] information about the method parameters
-    #
+    # @return [Hash] information about the method parameters.
     def self.params_for(method_name)
       @params_for[method_name] ||= begin
         method_name = method_name.to_sym
         param_groups = instance_method(method_name).parameters.group_by(&:first)
-        out = {
-          required: param_groups[:keyreq] && param_group[:keyreq].map(&:last),
-          optional: param_groups[:key] && param_groups[:key].map(&:last),
-          additional: param_groups.key?(:keyrest),
-        }
-        out.each do |k, v|
-          if v
-            v.freeze
-          else
-            out.delete(k)
-          end
-        end
-        out.freeze
+        out = param_groups.map { |k, v| [k, v.map(&:last)] }.to_h
+        out.each_value(&:freeze).freeze
       end
     end
 
@@ -60,28 +56,33 @@ module Lunanode
     include APIActions
     attr_reader :api_id
 
+    # Instantiate an API object
+    #
+    # @return [API] an API instance.
+    #
     # @overload initialize(credentials_file)
     #   Instantiate an API object from a credentials file.
-    #   @param credentials_file[IO,String] a JSON credentials file
+    #   @param credentials_file[String,File] a JSON credentials file
     #     (which contains the keys `api_id` and `api_key`)
     #
-    # @overload initialize(api_id: nil, api_key: nil)
+    #   @raise [JSON::ParserError] if the JSON file could not be read properly.
+    #   @raise [KeyError] if any required key could not be found.
+    #
+    # @overload initialize(api_id: , api_key: )
     #   Instantiate an API object from an API ID and API Key.
     #   @param api_id[String] A LunaNode API ID
     #   @param api_key[String] A LunaNode API Key
     #
-    def initialize(credentials_file = nil, api_id: nil, api_key: nil)
-      if !credentials_file.nil? && File.exist?(credentials_file)
+    #   @raise [KeyError] if any required key could not be found.
+    #
+    def initialize(*args, **options)
+      credentials_file = args.compact.first.to_s
+      if File.exist?(credentials_file)
         credentials_data = File.read(credentials_file)
-        credentials = JSON.parse(credentials_data, symbolize_names: true)
-        @api_id = credentials[:api_id]
-        @api_key = credentials[:api_key]
-      else
-        @api_id = api_id
-        @api_key = api_key
+        options = JSON.parse(credentials_data, symbolize_names: true)
       end
-      @api_id = @api_id.to_s.freeze
-      @api_key = @api_key.to_s.freeze
+      @api_id = options.fetch(:api_id).to_s.dup.freeze
+      @api_key = options.fetch(:api_key).to_s.dup.freeze
       @rest_client = RestClient::Resource.new(
         API_ENDPOINT,
         verify_ssl: OpenSSL::SSL::VERIFY_PEER
@@ -98,7 +99,7 @@ module Lunanode
     #
     # @param category[#to_sym] The API action category (i.e. dns, image, vm...)
     # @param action[#to_sym] The API action name (i.e. create, list...)
-    # @param params[Hash] Any parameters required for the action.
+    # @param params[**Hash] Any parameters required for the action.
     #
     # @return [Hash,Array,String] Response data from the API action.
     # @raise [APIError] If there was a problem with the action.
@@ -122,6 +123,14 @@ module Lunanode
     # Make an API call and return response.
     def call_api(handler_path, params)
       req_formdata = auth_request_formdata(handler_path, clean_params(params))
+      if $DEBUG
+        STDERR.puts "call_api()\n" + JSON.pretty_generate(
+          path: "#{rest_client.url}#{handler_path}",
+          req: JSON.parse(req_formdata[:req]),
+          signature: req_formdata[:signature],
+          nonce: req_formdata[:nonce]
+        )
+      end
       JSON.parse(rest_client[handler_path].post(req_formdata),
                  symbolize_names: true)
     rescue RestClient::Exception => err
@@ -155,7 +164,7 @@ module Lunanode
     def raw_request_message(params)
       params[:api_id] = api_id
       params[:api_partialkey] = api_key.slice(0, 64)
-      params.to_json
+      JSON.generate(params)
     end
 
     # Generate nonce for request
