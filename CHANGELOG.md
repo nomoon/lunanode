@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [0.2.0]
+## [0.2.0] - 2017-02-08
 ### Added
 - Created this Changelog.
 - API calls will now print potentially-useful information if $DEBUG=true
