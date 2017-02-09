@@ -5,11 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.2.0]
 ### Added
 - Created this Changelog.
-- Improved documentation (for `API.new` and `API.params_for`).
+- API calls will now print potentially-useful information if $DEBUG=true
 
 ### Changed
+- Improved documentation (particularly for `API.new` and `API.params_for`).
 - `API.new` will no longer instantiate without any parameters, though it is less
   fussy about its parameters now.
 - APIError now unescapes some HTML entities from the provided message for
@@ -35,7 +38,8 @@ This is the first point of reasonable functionality/stability.
 ### Added
 - Initial commit, not publicly released
 
-[Unreleased]: https://github.com/nomoon/lunanode/compare/v0.1.6...HEAD
+[Unreleased]: https://github.com/nomoon/lunanode/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/nomoon/lunanode/compare/v0.1.6...v0.2.0
 [0.1.6]: https://github.com/nomoon/lunanode/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/nomoon/lunanode/compare/v0.0.1...v0.1.5
 [0.0.1]: https://github.com/nomoon/lunanode/releases/tag/v0.0.1
