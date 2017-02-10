@@ -160,6 +160,10 @@
   :retrieve:
     :keyreq:
       - image_id
+  :rename:
+    :keyreq:
+      - image_id
+      - name
 :volume:
   :list:
     :keyreq:
@@ -207,6 +211,10 @@
   :snapshot-list:
     :keyreq:
       - region
+  :rename:
+    :keyreq:
+      - volume_id
+      - name
 :floating:
   :list:
   :add:
