@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 require "bundler/gem_tasks"
+require "reek/rake/task"
+require "rubocop/rake_task"
 require "rspec/core/rake_task"
+
+Reek::Rake::Task.new do |t|
+  t.fail_on_error = false
+end
+
+RuboCop::RakeTask.new do |t|
+  t.fail_on_error = false
+end
 
 RSpec::Core::RakeTask.new(:spec)
 
@@ -16,4 +26,4 @@ task :generate_default_api_modules do
   end
 end
 
-task default: :spec
+task default: %i[reek rubocop spec]
