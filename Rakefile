@@ -20,9 +20,12 @@ task :generate_default_api_modules do
   modules = Lunanode::ActionGenerator.generate_default_modules
   modules.each do |category, module_s|
     filename = "lib/lunanode/api_actions/default/#{category}.rb"
-    raise "File already exists: #{filename}" if File.exist?(filename)
-    bytes = File.write(filename, module_s)
-    puts "File written: #{filename} (#{bytes} bytes)"
+    existing_data = File.read(filename) if File.exist?(filename)
+    if module_s == existing_data
+      puts "File unchanged: #{filename}"
+    else
+      puts "File written: #{filename} (#{File.write(filename, module_s)} bytes)"
+    end
   end
 end
 
