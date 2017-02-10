@@ -40,12 +40,15 @@ module Lunanode
     #
     # @param method_name[#to_sym] The name of the API method
     # @return [Hash] information about the method parameters.
+    #
     def self.params_for(method_name)
+      method_name = method_name.to_sym
       @params_for[method_name] ||= begin
-        method_name = method_name.to_sym
         param_groups = instance_method(method_name).parameters.group_by(&:first)
-        out = param_groups.map { |k, v| [k, v.map(&:last)] }.to_h
-        out.each_value(&:freeze).freeze
+        out = param_groups.map do |status, param_def|
+          [status, param_def.map(&:last)]
+        end
+        out.to_h.each_value(&:freeze).freeze
       end
     end
 
@@ -113,7 +116,7 @@ module Lunanode
       else
         resp
       end
-    end
+    end # :reek:FeatureEnvy
 
     private
 
@@ -121,31 +124,33 @@ module Lunanode
 
     # Make an API call and return response.
     def call_api(handler_path, params)
+      req_url = "#{rest_client.url}#{handler_path}"
       req_formdata = auth_request_formdata(handler_path, clean_params(params))
+
       if $DEBUG
         STDERR.puts "call_api()\n" + JSON.pretty_generate(
-          path: "#{rest_client.url}#{handler_path}",
+          path: req_url,
           req: JSON.parse(req_formdata[:req]),
           signature: req_formdata[:signature],
           nonce: req_formdata[:nonce]
         )
       end
-      JSON.parse(rest_client[handler_path].post(req_formdata),
-                 symbolize_names: true)
+
+      response = rest_client[handler_path].post(req_formdata)
+      JSON.parse(response, symbolize_names: true)
     rescue RestClient::Exception => err
-      err.message += "\n  Request Path: #{rest_client.url}#{handler_path}" \
+      err.message += "\n  Request Path: #{req_url}" \
                      "\n  Request Data: #{req_data}"
       raise err
     end
 
     # Clean empty request parameters
     def clean_params(params)
-      params.each_with_object({}) do |(k, v), acc|
-        if k && k.respond_to?(:to_sym) && v && v.respond_to?(:to_s)
-          acc[k.to_sym] = v.to_s
-        end
+      params.each_with_object({}) do |(param, value), acc|
+        next unless param.respond_to?(:to_sym) && value.respond_to?(:to_s)
+        acc[param.to_sym] = value.to_s
       end
-    end
+    end # :reek:ManualDispatch
 
     # Create signed request data
     def auth_request_formdata(handler_path, params)
