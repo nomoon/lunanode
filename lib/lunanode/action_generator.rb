@@ -23,20 +23,20 @@ module Lunanode
 
     UNSAFE_IDENTIFIER = /.{21,}|[^A-Za-z0-9_*\-]/
 
-    def module_name(name)
-      if name.length > 3
-        name.capitalize
-      else
-        name.upcase
-      end
+    def check_safe!(identifier)
+      raise "Unsafe name `#{identifier}`" if identifier =~ UNSAFE_IDENTIFIER
     end
 
     def indent_lines(string)
       string.gsub(/^(?!$)/, "  ")
     end
 
-    def check_safe!(identifier)
-      raise "Unsafe name `#{identifier}`" if identifier =~ UNSAFE_IDENTIFIER
+    def module_name(name)
+      if name.length > 3
+        name.capitalize
+      else
+        name.upcase
+      end
     end
 
     def generate_categories(data)
@@ -48,49 +48,57 @@ module Lunanode
 
     def generate_actions(category, actions)
       actions = actions.map do |action, params|
-        generate_action(category, action, params)
+        indent_lines(generate_action(category, action, params))
       end
 
-      category_module = "module #{module_name(category)}\n" +
-                        actions.map { |a| indent_lines(a) }.join("\n") +
-                        "end\n"
+      category_mod = "module #{module_name(category)}\n" \
+                     "#{actions.join("\n")}end\n"
+      actions_mod = "module APIActions\n#{indent_lines(category_mod)}end\n"
 
-      actions_module = "module APIActions\n" +
-                       indent_lines(category_module) +
-                       "end\n"
+      "# frozen_string_literal: true\n\n" \
+      "module #{name.split('::')[-2]}\n#{indent_lines(actions_mod)}end\n"
+    end
 
-      src = "module #{name.split('::')[-2]}\n" +
-            indent_lines(actions_module) +
-            "end\n"
+    def generate_param_list(params)
+      params.to_h.each_with_object({}) do |(status, param_arr), acc|
+        param_arr.each do |param|
+          check_safe!(param)
+          acc[param] = status
+        end
+      end
+    end
 
-      "# frozen_string_literal: true\n\n#{src}"
+    def generate_param_list_sig(param_list)
+      param_list.map do |param, status|
+        case status
+        when :required
+          "#{param}:"
+        when :optional
+          "#{param}: nil"
+        when :keyrest
+          "**#{param}"
+        end
+      end
+    end
+
+    def generate_param_list_call(param_list)
+      param_list.map do |(param, status)|
+        case status
+        when :keyrest
+          "**#{param}"
+        else
+          "#{param}: #{param}"
+        end
+      end
     end
 
     def generate_action(category, action, params)
       check_safe!(action)
-      params = params.to_h
-
-      param_list_req = Array(params[:required])
-      param_list_opt = Array(params[:optional])
-      param_list = param_list_req + param_list_opt
-      param_list.each { |p| check_safe!(p) }
-
-      param_list_call_arr = param_list.map do |p|
-        p.start_with?("**") ? p : "#{p}: #{p}"
-      end
-
-      param_list_req_sig_arr = param_list_req.map do |p|
-        "#{p}:"
-      end
-
-      param_list_opt_sig_arr = param_list_opt.map do |p|
-        p.start_with?("**") ? p : "#{p}: nil"
-      end
-      param_list_sig_arr = (param_list_req_sig_arr + param_list_opt_sig_arr)
+      param_list = generate_param_list(params)
 
       unless param_list.empty?
-        param_list_call = ", #{param_list_call_arr.join(', ')}"
-        param_list_sig = "(#{param_list_sig_arr.join(', ')})"
+        param_list_call = ", #{generate_param_list_call(param_list).join(', ')}"
+        param_list_sig = "(#{generate_param_list_sig(param_list).join(', ')})"
       end
 
       "def #{category}_#{action.to_s.tr('-', '_')}#{param_list_sig}\n" \
@@ -99,7 +107,9 @@ module Lunanode
     end
 
     private_constant :UNSAFE_IDENTIFIER
-    private_class_method :check_safe!, :generate_categories, :generate_actions,
-                         :generate_action
+    private_class_method :check_safe!, :indent_lines, :module_name,
+                         :generate_categories, :generate_actions,
+                         :generate_param_list, :generate_param_list_sig,
+                         :generate_param_list_call, :generate_action
   end
 end

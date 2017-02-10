@@ -283,8 +283,8 @@
       - fail_count
       - success_count
       - check_interval
-    :optional:
-      - "**from_check_type"
+    :keyrest:
+      - from_check_type
   :check-remove:
     :required:
       - check_id
