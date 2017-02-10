@@ -7,8 +7,7 @@ module Lunanode
   class APIError < RuntimeError
     def to_s
       unescaped = CGI.unescapeHTML(super)
-      return unescaped unless unescaped.start_with?("\"{")
-      JSON.pretty_generate(JSON.parse(unescaped.gsub(/\A"|"\z/, "")))
+      JSON.pretty_generate(JSON.parse(unescaped))
     rescue JSON::ParserError
       unescaped
     end

@@ -106,8 +106,7 @@ module Lunanode
     #
     def action(category, action, **params)
       resp = call_api("#{category}/#{action}/", params)
-      raise APIError, %("#{resp[:error]}") unless resp[:success] == "yes"
-      resp.delete(:success)
+      raise APIError, resp[:error] unless resp.delete(:success) == "yes"
 
       if resp.size == 1
         resp.values.first
