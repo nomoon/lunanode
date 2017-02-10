@@ -71,9 +71,9 @@ module Lunanode
     def generate_param_list_sig(param_list)
       param_list.map do |param, status|
         case status
-        when :required
+        when :keyreq
           "#{param}:"
-        when :optional
+        when :key
           "#{param}: nil"
         when :keyrest
           "**#{param}"

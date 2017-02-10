@@ -1,74 +1,74 @@
 :vm:
   :start:
-    :required:
+    :keyreq:
       - vm_id
   :stop:
-    :required:
+    :keyreq:
       - vm_id
   :reboot:
-    :required:
+    :keyreq:
       - vm_id
   :diskswap:
-    :required:
+    :keyreq:
       - vm_id
   :info:
-    :required:
+    :keyreq:
       - vm_id
   :delete:
-    :required:
+    :keyreq:
       - vm_id
   :reimage:
-    :required:
+    :keyreq:
       - vm_id
       - image_id
   :resize:
-    :required:
+    :keyreq:
       - vm_id
       - plan_id
   :rescue:
-    :required:
+    :keyreq:
       - vm_id
   :vnc:
-    :required:
+    :keyreq:
       - vm_id
   :floatingip-add:
-    :required:
+    :keyreq:
       - vm_id
-    :optional:
+    :key:
       - ip
       - private_ip
   :floatingip-delete:
-    :required:
+    :keyreq:
       - vm_id
-    :optional:
+    :key:
       - ip
       - keep
   :iplist:
-    :required:
+    :keyreq:
       - vm_id
   :ip-add:
-    :required:
+    :keyreq:
       - vm_id
-    :optional:
+    :key:
       - ip
   :ip-delete:
-    :required:
+    :keyreq:
       - vm_id
       - ip
   :securitygroup-add:
-    :required:
+    :keyreq:
       - vm_id
       - group_id
   :securitygroup-remove:
-    :required:
+    :keyreq:
       - vm_id
       - group_id
   :create:
-    :required:
+    :keyreq:
       - hostname
       - plan_id
       - image_id
-    :optional:
+    :key:
       - region
       - ip
       - net_id
@@ -80,164 +80,164 @@
       - set_password
       - affinity_group
   :snapshot:
-    :required:
+    :keyreq:
       - vm_id
       - name
   :list:
   :shelve:
-    :required:
+    :keyreq:
       - vm_id
   :unshelve:
-    :required:
+    :keyreq:
       - vm_id
   :rename:
-    :required:
+    :keyreq:
       - vm_id
       - hostname
 :dns:
   :list:
   :set:
-    :required:
+    :keyreq:
       - ip
       - hostname
   :zone-list:
   :zone-add:
-    :required:
+    :keyreq:
       - origin
-    :optional:
+    :key:
       - ttl
   :zone-remove:
-    :required:
+    :keyreq:
       - zone_id
   :record-list:
-    :required:
+    :keyreq:
       - zone_id
   :record-add:
-    :required:
+    :keyreq:
       - zone_id
       - name
       - data
       - ttl
       - type
   :record-remove:
-    :required:
+    :keyreq:
       - record_id
   :dyn-list:
   :dyn-add:
-    :required:
+    :keyreq:
       - name
       - ip
   :dyn-update:
-    :required:
+    :keyreq:
       - dyn_id
       - name
       - ip
   :dyn-remove:
-    :required:
+    :keyreq:
       - dyn_id
 :image:
   :list:
-    :optional:
+    :key:
       - region
   :delete:
-    :required:
+    :keyreq:
       - image_id
   :details:
-    :required:
+    :keyreq:
       - image_id
   :replicate:
-    :required:
+    :keyreq:
       - image_id
       - region
   :fetch:
-    :required:
+    :keyreq:
       - region
       - name
       - location
       - format
-    :optional:
+    :key:
       - virtio
   :retrieve:
-    :required:
+    :keyreq:
       - image_id
 :volume:
   :list:
-    :required:
+    :keyreq:
       - region
   :create:
-    :required:
+    :keyreq:
       - region
       - label
       - size
-    :optional:
+    :key:
       - image
       - snapshot_id
   :delete:
-    :required:
+    :keyreq:
       - region
       - volume_id
   :attach:
-    :required:
+    :keyreq:
       - region
       - volume_id
       - vm_id
       - target
   :detach:
-    :required:
+    :keyreq:
       - region
       - volume_id
   :info:
-    :required:
+    :keyreq:
       - region
       - volume_id
   :extend:
-    :required:
+    :keyreq:
       - region
       - volume_id
       - size
   :snapshot-create:
-    :required:
+    :keyreq:
       - region
       - volume_id
       - label
   :snapshot-delete:
-    :required:
+    :keyreq:
       - region
       - snapshot_id
   :snapshot-list:
-    :required:
+    :keyreq:
       - region
 :floating:
   :list:
   :add:
-    :required:
+    :keyreq:
       - region
   :delete:
-    :required:
+    :keyreq:
       - region
       - ip
 :network:
   :list:
-    :optional:
+    :key:
       - region
   :create:
-    :required:
+    :keyreq:
       - region
       - name
       - subnet
       - dns
   :delete:
-    :required:
+    :keyreq:
       - region
       - net_id
 :lb:
   :list:
-    :required:
+    :keyreq:
       - region
-    :optional:
+    :key:
       - net_id
   :create:
-    :required:
+    :keyreq:
       - region
       - net_id
       - name
@@ -246,26 +246,26 @@
       - connection_limit
       - port
   :delete:
-    :required:
+    :keyreq:
       - region
       - lb_id
   :info:
-    :required:
+    :keyreq:
       - region
       - lb_id
   :member_add:
-    :required:
+    :keyreq:
       - region
       - lb_id
       - ip
       - port
   :member_remove:
-    :required:
+    :keyreq:
       - region
       - lb_id
       - member_id
   :associate:
-    :required:
+    :keyreq:
       - region
       - lb_id
       - ip
@@ -277,7 +277,7 @@
   :check-list:
   :check-types:
   :check-add:
-    :required:
+    :keyreq:
       - name
       - type
       - fail_count
@@ -286,45 +286,45 @@
     :keyrest:
       - from_check_type
   :check-remove:
-    :required:
+    :keyreq:
       - check_id
   :contact-list:
   :contact-add:
   :contact-remove:
-    :required:
+    :keyreq:
       - type
       - rel
   :alert-list:
-    :required:
+    :keyreq:
       - check_id
   :alert-add:
-    :required:
+    :keyreq:
       - check_id
       - contact_id
   :alert-remove:
-    :required:
+    :keyreq:
       - alert_id
 securitygroup:
   :list:
   :create:
-    :required:
+    :keyreq:
       - region
       - name
   :delete:
-    :required:
+    :keyreq:
       - region
       - group_id
   :rename:
-    :required:
+    :keyreq:
       - region
       - group_id
       - name
   :rule-list:
-    :required:
+    :keyreq:
       - region
       - group_id
   :rule-insert:
-    :required:
+    :keyreq:
       - region
       - group_id
       - direction
@@ -332,12 +332,12 @@ securitygroup:
       - protocol
       - remote_type
       - remote_value
-    :optional:
+    :key:
       - port_min
       - port_max
       - label
   :rule-delete:
-    :required:
+    :keyreq:
       - region
       - group_id
       - rule_id
@@ -347,45 +347,45 @@ securitygroup:
   :usage:
   :domain-list:
   :domain-add:
-    :required:
+    :keyreq:
       - name
   :domain-remove:
-    :required:
+    :keyreq:
       - domain_id
   :domain-dkim-set:
-    :required:
+    :keyreq:
       - domain_id
       - selector
       - private_key
   :domain-dkim-unset:
-    :required:
+    :keyreq:
       - domain_id
   :user-list:
-    :required:
+    :keyreq:
       - domain_id
   :user-add:
-    :required:
+    :keyreq:
       - domain_id
       - username
       - password
   :user-set-password:
-    :required:
+    :keyreq:
       - domain_id
       - user_id
       - password
   :user-remove:
-    :required:
+    :keyreq:
       - domain_id
       - user_id
   :alias-list:
-    :required:
+    :keyreq:
       - domain_id
   :alias-add:
-    :required:
+    :keyreq:
       - domain_id
       - name
       - target
   :alias-remove:
-    :required:
+    :keyreq:
       - domain_id
       - alias_id
