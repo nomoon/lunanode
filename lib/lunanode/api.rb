@@ -140,7 +140,7 @@ module Lunanode
       JSON.parse(response, symbolize_names: true)
     rescue RestClient::Exception => err
       err.message += "\n  Request Path: #{req_url}" \
-                     "\n  Request Data: #{req_data}"
+                     "\n  Request Data: #{req_formdata}"
       raise err
     end
 
