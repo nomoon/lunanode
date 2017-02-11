@@ -147,10 +147,11 @@ module Lunanode
     # Clean empty request parameters
     def clean_params(params)
       params.each_with_object({}) do |(param, value), acc|
+        next if param.nil? || value.nil?
         next unless param.respond_to?(:to_sym) && value.respond_to?(:to_s)
         acc[param.to_sym] = value.to_s
       end
-    end # :reek:ManualDispatch
+    end # :reek:NilCheck :reek:ManualDispatch
 
     # Create signed request data
     def auth_request_formdata(handler_path, params)
