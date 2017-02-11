@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in lunanode_api.gemspec
+# Specify your gem's dependencies in lunanode.gemspec
 gemspec

@@ -26,6 +26,10 @@ module Lunanode
       def image_retrieve(image_id:)
         action(:image, :retrieve, image_id: image_id)
       end
+
+      def image_rename(image_id:, name:)
+        action(:image, :rename, image_id: image_id, name: name)
+      end
     end
   end
 end

@@ -1,0 +1,20 @@
+---
+
+IrresponsibleModule:
+  enabled: false
+
+NestedIterators:
+ max_allowed_nesting: 2
+
+TooManyStatements:
+  max_statements: 10
+
+UtilityFunction:
+  public_methods_only: true
+
+# Don't complain about undocumented default actions
+"lib/lunanode/api_actions/default":
+  DataClump:
+    enabled: false
+  LongParameterList:
+    enabled: false

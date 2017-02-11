@@ -42,6 +42,10 @@ module Lunanode
       def volume_snapshot_list(region:)
         action(:volume, :"snapshot-list", region: region)
       end
+
+      def volume_rename(volume_id:, name:)
+        action(:volume, :rename, volume_id: volume_id, name: name)
+      end
     end
   end
 end
