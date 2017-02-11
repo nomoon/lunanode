@@ -9,15 +9,10 @@ rvm:
   - ruby-head
   - jruby-9.1.5.0
   - jruby-head
-  - rubinius-3
 matrix:
-  include:
-    - rvm: rubinius-3
-      sudo: true
   allow_failures:
     - rvm: ruby-head
     - rvm: jruby-head
-    - rvm: rubinius-3
 before_install:
   - gem update --system
   - gem --version
