@@ -67,15 +67,15 @@
     :keyreq:
       - hostname
       - plan_id
-      - image_id
     :key:
+      - image_id
+      - volume_id
+      - volume_virtio
       - region
       - ip
       - net_id
       - securitygroups
       - scripts
-      - volume_id
-      - volume_virtio
       - key_id
       - set_password
       - affinity_group

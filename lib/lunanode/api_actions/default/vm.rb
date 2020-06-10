@@ -71,8 +71,8 @@ module Lunanode
         action(:vm, :"securitygroup-remove", vm_id: vm_id, group_id: group_id)
       end
 
-      def vm_create(hostname:, plan_id:, image_id:, region: nil, ip: nil, net_id: nil, securitygroups: nil, scripts: nil, volume_id: nil, volume_virtio: nil, key_id: nil, set_password: nil, affinity_group: nil)
-        action(:vm, :create, hostname: hostname, plan_id: plan_id, image_id: image_id, region: region, ip: ip, net_id: net_id, securitygroups: securitygroups, scripts: scripts, volume_id: volume_id, volume_virtio: volume_virtio, key_id: key_id, set_password: set_password, affinity_group: affinity_group)
+      def vm_create(hostname:, plan_id:, image_id: nil, volume_id: nil, volume_virtio: nil, region: nil, ip: nil, net_id: nil, securitygroups: nil, scripts: nil, key_id: nil, set_password: nil, affinity_group: nil)
+        action(:vm, :create, hostname: hostname, plan_id: plan_id, image_id: image_id, volume_id: volume_id, volume_virtio: volume_virtio, region: region, ip: ip, net_id: net_id, securitygroups: securitygroups, scripts: scripts, key_id: key_id, set_password: set_password, affinity_group: affinity_group)
       end
 
       def vm_snapshot(vm_id:, name:)
