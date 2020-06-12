@@ -94,17 +94,11 @@
     :keyreq:
       - vm_id
       - hostname
-:dns:
-  :list:
-  :set:
-    :keyreq:
-      - ip
-      - hostname
+:dns2:
   :zone-list:
   :zone-add:
     :keyreq:
-      - origin
-    :key:
+      - name
       - ttl
   :zone-remove:
     :keyreq:
@@ -119,9 +113,24 @@
       - data
       - ttl
       - type
+    :key:
+      - policy
+      - weight
+      - region
+      - regiongroup
+      - country
+      - continent
+      - global
+      - latitude
+      - longitude
+      - aux
+      - monitor_id
+      - orig_record_id
   :record-remove:
     :keyreq:
+      - zone_id
       - record_id
+:dns:
   :dyn-list:
   :dyn-add:
     :keyreq:
@@ -166,8 +175,6 @@
       - name
 :volume:
   :list:
-    :keyreq:
-      - region
   :create:
     :keyreq:
       - region
@@ -178,30 +185,24 @@
       - snapshot_id
   :delete:
     :keyreq:
-      - region
       - volume_id
   :attach:
     :keyreq:
-      - region
       - volume_id
       - vm_id
       - target
   :detach:
     :keyreq:
-      - region
       - volume_id
   :info:
     :keyreq:
-      - region
       - volume_id
   :extend:
     :keyreq:
-      - region
       - volume_id
       - size
   :snapshot-create:
     :keyreq:
-      - region
       - volume_id
       - label
   :snapshot-delete:
@@ -211,6 +212,12 @@
   :snapshot-list:
     :keyreq:
       - region
+  :snapshot-replicate:
+    :keyreq:
+      - region
+      - snapshot_id
+      - image_name
+      - dst_region
   :rename:
     :keyreq:
       - volume_id
@@ -288,20 +295,19 @@
     :keyreq:
       - name
       - type
-      - fail_count
-      - success_count
       - check_interval
-    :keyrest:
-      - from_check_type
+      - delay
   :check-remove:
     :keyreq:
       - check_id
   :contact-list:
   :contact-add:
-  :contact-remove:
     :keyreq:
       - type
       - rel
+  :contact-remove:
+    :keyreq:
+      - contact_id
   :alert-list:
     :keyreq:
       - check_id
@@ -351,6 +357,21 @@ securitygroup:
       - rule_id
 :script:
   :list:
+  :get:
+    :keyreq:
+      - script_id
+  :create:
+    :keyreq:
+      - name
+      - content
+  :update:
+    :keyreq:
+      - script_id
+      - name
+      - content
+  :delete:
+    :keyreq:
+      - script_id
 :email:
   :usage:
   :domain-list:
@@ -397,3 +418,12 @@ securitygroup:
     :keyreq:
       - domain_id
       - alias_id
+:sshkey:
+  :add:
+    :keyreq:
+      - label
+      - sshkey
+  :list:
+  :remove:
+    :keyreq:
+      - key_id
