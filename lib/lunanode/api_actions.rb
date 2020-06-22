@@ -13,6 +13,8 @@ require "lunanode/api_actions/script"
 require "lunanode/api_actions/securitygroup"
 require "lunanode/api_actions/vm"
 require "lunanode/api_actions/volume"
+require "lunanode/api_actions/sshkey"
+require "lunanode/api_actions/billing"
 
 module Lunanode
   # Module containing all API action methods included from various component
@@ -37,5 +39,7 @@ module Lunanode
     include Floating
     include Email
     include DNS
+    include SshKey
+    include Billing
   end
 end

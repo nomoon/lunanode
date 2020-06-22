@@ -3,36 +3,28 @@
 module Lunanode
   module APIActions
     module DNS
-      def dns_list
-        action(:dns, :list)
+      def dns2_zone_list
+        action(:dns2, :"zone-list")
       end
 
-      def dns_set(ip:, hostname:)
-        action(:dns, :set, ip: ip, hostname: hostname)
+      def dns2_zone_add(name:, ttl:)
+        action(:dns2, :"zone-add", name: name, ttl: ttl)
       end
 
-      def dns_zone_list
-        action(:dns, :"zone-list")
+      def dns2_zone_remove(zone_id:)
+        action(:dns2, :"zone-remove", zone_id: zone_id)
       end
 
-      def dns_zone_add(origin:, ttl: nil)
-        action(:dns, :"zone-add", origin: origin, ttl: ttl)
-      end
-
-      def dns_zone_remove(zone_id:)
-        action(:dns, :"zone-remove", zone_id: zone_id)
-      end
-
-      def dns_record_list(zone_id:)
+      def dns2_record_list(zone_id:)
         action(:dns, :"record-list", zone_id: zone_id)
       end
 
-      def dns_record_add(zone_id:, name:, data:, ttl:, type:)
+      def dns2_record_add(zone_id:, name:, data:, ttl:, type:, policy: nil, weight: nil, region: nil, regiongroup: nil, country: nil, continent: nil, global: nil, latitude: nil, longitude: nil, aux: nil, monitor_id: nil, orig_record_id: nil)
         action(:dns, :"record-add", zone_id: zone_id, name: name, data: data, ttl: ttl, type: type)
       end
 
-      def dns_record_remove(record_id:)
-        action(:dns, :"record-remove", record_id: record_id)
+      def dns2_record_remove(zone_id:, record_id:)
+        action(:dns2, :"record-remove", zone_id: zone_id, record_id: record_id)
       end
 
       def dns_dyn_list
